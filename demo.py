@@ -121,5 +121,4 @@ async def respond(request: Request) -> Response:
     return response
 
 
-    from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
-callbacks=[StreamingStdOutCallbackHandler()]
+
