@@ -85,7 +85,7 @@ def use_llm() -> AgentExecutor:
             MessagesPlaceholder(variable_name="agent_scratchpad"),
         ]
     )
-
+    memory = ConversationBufferMemory(memory_key="chat_history")
     llm = chat_openai(streaming=True)
     chain = create_openai_tools_agent(llm=llm, prompt=prompt_template, tools=tools)
 
@@ -94,7 +94,7 @@ def use_llm() -> AgentExecutor:
         # return_intermediate_steps=True,
         handle_parsing_errors=True,
         tools=tools,
-        # memory=memory,
+        memory=memory,
         verbose=True,
     )
 
