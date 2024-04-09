@@ -5,6 +5,8 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.tools import Tool
 from langchain_openai import ChatOpenAI
 from twilio.twiml.voice_response import VoiceResponse, Pause
+from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
+
 
 router = APIRouter()
 
@@ -59,7 +61,7 @@ def chat_openai(
     model_name: str = "gpt-4-turbo-preview",
     temperature: float = 0,
     verbose: bool = True,
-    streaming: bool = False,
+    streaming: bool = True,
     callbacks: list = None,
 ):
     return ChatOpenAI(
@@ -68,7 +70,7 @@ def chat_openai(
         openai_api_key="",
         verbose=verbose,
         streaming=streaming,
-        callbacks=callbacks,
+        callbacks=[StreamingStdOutCallbackHandler()],
     )
 
 
@@ -117,3 +119,7 @@ async def respond(request: Request) -> Response:
     response = Response(content=str(r), media_type="application/xml")
 
     return response
+
+
+    from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
+callbacks=[StreamingStdOutCallbackHandler()]
